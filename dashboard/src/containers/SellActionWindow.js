@@ -13,7 +13,7 @@ const SellActionWindow = ({ uid }) => {
 const handleSellClick = async () => {
   try {
     const response = await axios.post(
-      "http://localhost:3002/sellOrder",
+      "https://full-stack-trading-platform-z1yj-3ozxs9lt6.vercel.app",
       {
         name: uid,
         qty: Number(stockQuantity),

@@ -13,7 +13,7 @@ const BuyActionWindow = ({ uid }) => {
   const handleBuyClick = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3002/newOrder",
+        "https://full-stack-trading-platform-uquj.onrender.com/newOrder",
         {
           name: uid,
           qty: Number(stockQuantity),
@@ -30,21 +30,20 @@ const BuyActionWindow = ({ uid }) => {
       closeBuyWindow();
 
     } catch (err) {
-
       console.error(err);
 
       if (err.response?.status === 401) {
-
         alert("Session Expired. Please login again.");
 
-        window.location.href = "http://localhost:3000/login";
+        window.location.href =
+          "https://full-stack-trading-platform-npnm4m86h-shivayogi-ds-projects.vercel.app/login";
 
         return;
       }
 
       alert(
         err.response?.data?.message ||
-        "Failed to place order."
+          "Failed to place order."
       );
     }
   };

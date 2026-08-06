@@ -8,7 +8,7 @@ useEffect(() => {
   const fetchPositions = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:3002/allPositions",
+        "https://full-stack-trading-platform-z1yj-3ozxs9lt6.vercel.app",
         {
           withCredentials: true,
         }
