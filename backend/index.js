@@ -30,6 +30,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:3001",
+      "https://full-stack-trading-platform-npnm4m86h-shivayogi-ds-projects.vercel.app",
     ],
     credentials: true,
   })
