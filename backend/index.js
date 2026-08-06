@@ -25,8 +25,6 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-
-
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:3001",
@@ -36,8 +34,8 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (Postman, mobile apps, etc.)
+    origin(origin, callback) {
+      // Allow requests without Origin (Postman, mobile apps)
       if (!origin) {
         return callback(null, true);
       }
@@ -46,12 +44,21 @@ app.use(
         return callback(null, true);
       }
 
-      return callback(new Error(`Origin ${origin} not allowed by CORS`));
+      console.log("Blocked Origin:", origin);
+
+      return callback(new Error("Origin not allowed by CORS"));
     },
 
     credentials: true,
 
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS",
+    ],
 
     allowedHeaders: [
       "Content-Type",
@@ -60,14 +67,15 @@ app.use(
     ],
   })
 );
-// Handle preflight requests
+
+// Handle OPTIONS requests
 app.options("*", cors());
 
-/* ========================= AUTH ROUTES ========================= */
+/* ========================= TEST ROUTES ========================= */
 
-app.use("/api/auth", authRoutes);
-
-/* ========================= HOLDINGS ========================= */
+app.get("/", (req, res) => {
+  res.send("Backend Running Successfully");
+});
 
 app.get("/test", (req, res) => {
   res.json({
@@ -75,6 +83,12 @@ app.get("/test", (req, res) => {
     message: "Backend is working",
   });
 });
+
+/* ========================= AUTH ROUTES ========================= */
+
+app.use("/api/auth", authRoutes);
+
+/* ========================= HOLDINGS ========================= */
 
 app.get("/allHoldings", isAuthenticated, async (req, res) => {
   try {
