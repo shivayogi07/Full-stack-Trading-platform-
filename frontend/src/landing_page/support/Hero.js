@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 
 function Hero() {
@@ -13,9 +14,12 @@ function Hero() {
         <div className="d-flex justify-content-between align-items-center mb-5 flex-wrap">
           <h2 className="fw-bold mb-3 mb-md-0">Support Portal</h2>
 
-          <a href="#" className="text-white text-decoration-none fw-semibold">
+          <Link
+            to="/support"
+            className="text-white text-decoration-none fw-semibold"
+          >
             Track Tickets →
-          </a>
+          </Link>
         </div>
 
         <div className="row align-items-center g-5">
@@ -40,21 +44,33 @@ function Hero() {
 
             {/* Quick Links */}
             <div className="d-flex flex-wrap gap-3">
-              <a href="#" className="text-white text-decoration-none">
+              <Link
+                to="/support"
+                className="text-white text-decoration-none"
+              >
                 Track account opening
-              </a>
+              </Link>
 
-              <a href="#" className="text-white text-decoration-none">
+              <Link
+                to="/support"
+                className="text-white text-decoration-none"
+              >
                 Track segment activation
-              </a>
+              </Link>
 
-              <a href="#" className="text-white text-decoration-none">
+              <Link
+                to="/support"
+                className="text-white text-decoration-none"
+              >
                 Intraday margins
-              </a>
+              </Link>
 
-              <a href="#" className="text-white text-decoration-none">
+              <Link
+                to="/support"
+                className="text-white text-decoration-none"
+              >
                 Kite user manual
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -65,43 +81,45 @@ function Hero() {
               style={{ borderRadius: "15px" }}
             >
               <div className="card-body p-4">
-                <h3 className="fw-bold mb-4 text-dark">Featured Articles</h3>
+                <h3 className="fw-bold mb-4 text-dark">
+                  Featured Articles
+                </h3>
 
                 <ol className="ps-3">
                   <li className="mb-3">
-                    <a
-                      href="#"
+                    <Link
+                      to="/support"
                       className="text-decoration-none text-primary fw-semibold"
                     >
                       Current Takeovers and Delisting - January 2024
-                    </a>
+                    </Link>
                   </li>
 
                   <li className="mb-3">
-                    <a
-                      href="#"
+                    <Link
+                      to="/support"
                       className="text-decoration-none text-primary fw-semibold"
                     >
                       Latest Intraday Leverages - MIS & CO
-                    </a>
+                    </Link>
                   </li>
 
                   <li className="mb-3">
-                    <a
-                      href="#"
+                    <Link
+                      to="/support"
                       className="text-decoration-none text-primary fw-semibold"
                     >
                       How to activate F&O trading
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to="/support"
                       className="text-decoration-none text-primary fw-semibold"
                     >
                       Fund withdrawal process
-                    </a>
+                    </Link>
                   </li>
                 </ol>
               </div>

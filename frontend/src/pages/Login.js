@@ -1,11 +1,8 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import API from "../services/authService";
 import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
-  const navigate = useNavigate();
-
   const { setUser } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
@@ -29,8 +26,8 @@ const Login = () => {
       setUser(res.data.user);
 
       alert("Login Successful");
-     window.location.href = "http://localhost:3000";
 
+      window.location.href = "http://localhost:3000";
     } catch (err) {
       alert(err.response?.data?.message || "Login Failed");
     }
@@ -39,13 +36,9 @@ const Login = () => {
   return (
     <div className="container mt-5" style={{ maxWidth: "450px" }}>
       <div className="card shadow p-4">
-
-        <h2 className="text-center mb-4">
-          Login
-        </h2>
+        <h2 className="text-center mb-4">Login</h2>
 
         <form onSubmit={handleSubmit}>
-
           <div className="mb-3">
             <label>Email</label>
 
@@ -72,15 +65,10 @@ const Login = () => {
             />
           </div>
 
-          <button
-            className="btn btn-primary w-100"
-            type="submit"
-          >
+          <button className="btn btn-primary w-100" type="submit">
             Login
           </button>
-
         </form>
-
       </div>
     </div>
   );

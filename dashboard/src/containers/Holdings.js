@@ -7,43 +7,34 @@ import { VerticalGraph } from "./VerticalGraph";
 const Holdings = () => {
   const [allHoldings, setAllHoldings] = useState([]);
 
-useEffect(() => {
-  const fetchHoldings = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:3002/allHoldings",
-        {
+  useEffect(() => {
+    const fetchHoldings = async () => {
+      try {
+        const res = await axios.get("http://localhost:3002/allHoldings", {
           withCredentials: true,
+        });
+
+        // Backend returns:
+        // { success: true, holdings: [...] }
+
+        setAllHoldings(res.data.holdings);
+      } catch (err) {
+        console.error(err);
+
+        if (err.response?.status === 401) {
+          alert("Session expired. Please login again.");
+
+          window.location.href = "http://localhost:3000/login";
+
+          return;
         }
-      );
 
-      // Backend returns:
-      // { success: true, holdings: [...] }
-
-      setAllHoldings(res.data.holdings);
-
-    } catch (err) {
-
-      console.error(err);
-
-      if (err.response?.status === 401) {
-
-        alert("Session expired. Please login again.");
-
-        window.location.href = "http://localhost:3000/login";
-
-        return;
+        alert(err.response?.data?.message || "Failed to load holdings.");
       }
+    };
 
-      alert(
-        err.response?.data?.message ||
-        "Failed to load holdings."
-      );
-    }
-  };
-
-  fetchHoldings();
-}, []);
+    fetchHoldings();
+  }, []);
 
   // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
   const labels = allHoldings.map((subArray) => subArray["name"]);
