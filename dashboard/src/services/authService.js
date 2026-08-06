@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:3002",
+  baseURL: "https://full-stack-trading-platform-uquj.onrender.com/api/auth",
   withCredentials: true,
 });
 

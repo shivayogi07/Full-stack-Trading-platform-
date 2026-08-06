@@ -10,9 +10,11 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const res = await API.get("/api/auth/me");
+        const res = await API.get("/me");
+
         setUser(res.data.user);
       } catch (err) {
+        console.error(err);
         setUser(null);
       } finally {
         setLoading(false);
@@ -34,3 +36,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export default AuthProvider;

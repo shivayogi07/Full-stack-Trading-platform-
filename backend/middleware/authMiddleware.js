@@ -3,33 +3,39 @@ const User = require("../model/User");
 
 exports.isAuthenticated = async (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    // Get token from HttpOnly cookie
+    const token = req.cookies?.token;
 
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: "Not Authorized. Please Login.",
+        message: "Not Authorized. Please login.",
       });
     }
 
+    // Verify JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = await User.findById(decoded.id);
+    // Find user
+    const user = await User.findById(decoded.id).select("-password");
 
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "User not found",
+        message: "User not found.",
       });
     }
 
+    // Attach user to request
     req.user = user;
 
     next();
   } catch (error) {
+    console.error("Authentication Error:", error.message);
+
     return res.status(401).json({
       success: false,
-      message: "Invalid or Expired Token",
+      message: "Invalid or expired token.",
     });
   }
 };

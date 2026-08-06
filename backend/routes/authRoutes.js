@@ -11,6 +11,8 @@ const { isAuthenticated } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
+/* ========================= AUTH ROUTES ========================= */
+
 router.post("/signup", signup);
 
 router.post("/login", login);

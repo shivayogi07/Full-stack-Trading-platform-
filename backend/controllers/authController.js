@@ -2,13 +2,21 @@ const bcrypt = require("bcryptjs");
 const User = require("../model/User");
 const generateToken = require("../utils/generateToken");
 
+// ================= COOKIE OPTIONS =================
+
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  maxAge: 24 * 60 * 60 * 1000, // 1 Day
+};
+
 // ========================= SIGNUP =========================
 
 exports.signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check if all fields are provided
     if (!name || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -16,7 +24,6 @@ exports.signup = async (req, res) => {
       });
     }
 
-    // Check if email already exists
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
@@ -26,27 +33,18 @@ exports.signup = async (req, res) => {
       });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // Create user
     const user = await User.create({
       name,
       email,
       password: hashedPassword,
     });
 
-    // Generate JWT
     const token = generateToken(user._id, user.role);
 
-    // Send JWT in HttpOnly Cookie
     res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 24 * 60 * 60 * 1000, // 1 Day
-      })
+      .cookie("token", token, cookieOptions)
       .status(201)
       .json({
         success: true,
@@ -58,6 +56,7 @@ exports.signup = async (req, res) => {
           role: user.role,
         },
       });
+
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -72,7 +71,13 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find user
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and Password are required",
+      });
+    }
+
     const user = await User.findOne({ email }).select("+password");
 
     if (!user) {
@@ -82,7 +87,6 @@ exports.login = async (req, res) => {
       });
     }
 
-    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
@@ -92,17 +96,10 @@ exports.login = async (req, res) => {
       });
     }
 
-    // Generate JWT
     const token = generateToken(user._id, user.role);
 
-    // Send JWT in HttpOnly Cookie
     res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 24 * 60 * 60 * 1000, // 1 Day
-      })
+      .cookie("token", token, cookieOptions)
       .status(200)
       .json({
         success: true,
@@ -114,6 +111,7 @@ exports.login = async (req, res) => {
           role: user.role,
         },
       });
+
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -129,7 +127,7 @@ exports.logout = (req, res) => {
     .cookie("token", "", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       expires: new Date(0),
     })
     .status(200)
@@ -139,9 +137,18 @@ exports.logout = (req, res) => {
     });
 };
 
+// ========================= GET CURRENT USER =========================
+
 exports.getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
 
     res.status(200).json({
       success: true,
@@ -149,11 +156,9 @@ exports.getMe = async (req, res) => {
     });
 
   } catch (error) {
-
     res.status(500).json({
       success: false,
       message: error.message,
     });
-
   }
 };
