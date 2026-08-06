@@ -25,17 +25,25 @@ app.use(bodyParser.json());
 
 app.use(cookieParser());
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "https://full-stack-trading-platform-npnm4m86h-shivayogi-ds-projects.vercel.app",
+  "https://full-stack-trading-platform-z1yj-3ozxs9lt6.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "https://full-stack-trading-platform-npnm4m86h-shivayogi-ds-projects.vercel.app",
-    ],
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
-
 /* ========================= AUTH ROUTES ========================= */
 
 app.use("/api/auth", authRoutes);
