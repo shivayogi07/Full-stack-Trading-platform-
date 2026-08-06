@@ -27,7 +27,7 @@ const Login = () => {
 
       alert("Login Successful");
 
-      window.location.href = "http://localhost:3000";
+      window.location.href = "https://full-stack-trading-platform-z1yj-3ozxs9lt6.vercel.app";
     } catch (err) {
       alert(err.response?.data?.message || "Login Failed");
     }
