@@ -21,8 +21,8 @@ const MONGO_URL = process.env.MONGO_URL;
 
 /* ========================= MIDDLEWARE ========================= */
 
+app.use(express.json());
 app.use(bodyParser.json());
-
 app.use(cookieParser());
 
 const allowedOrigins = [
@@ -34,7 +34,7 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin(origin, callback) {
+    origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -42,8 +42,14 @@ app.use(
       }
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+// Handle preflight requests
+app.options("*", cors());
+
 /* ========================= AUTH ROUTES ========================= */
 
 app.use("/api/auth", authRoutes);
@@ -144,7 +150,7 @@ mongoose
     console.log("✅ MongoDB Connected");
 
     app.listen(PORT, () => {
-      console.log(`🚀 Server Running at http://localhost:${PORT}`);
+      console.log(`🚀 Server Running on Port ${PORT}`);
     });
   })
   .catch((err) => {
