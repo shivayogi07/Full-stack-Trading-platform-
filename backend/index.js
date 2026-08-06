@@ -69,6 +69,13 @@ app.use("/api/auth", authRoutes);
 
 /* ========================= HOLDINGS ========================= */
 
+app.get("/test", (req, res) => {
+  res.json({
+    success: true,
+    message: "Backend is working",
+  });
+});
+
 app.get("/allHoldings", isAuthenticated, async (req, res) => {
   try {
     const holdings = await HoldingsModel.find({});
