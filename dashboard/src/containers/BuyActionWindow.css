@@ -1,0 +1,260 @@
+/* Dark Background */
+
+.popup-overlay{
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,.35);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:999;
+}
+
+/* Popup */
+
+.buy-container{
+
+    width:430px;
+    max-width:95%;
+
+    background:white;
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    box-shadow:0 20px 50px rgba(0,0,0,.25);
+
+    animation:popup .25s ease;
+
+    cursor:move;
+}
+
+/* Animation */
+
+@keyframes popup{
+
+    from{
+        opacity:0;
+        transform:translateY(20px) scale(.95);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+
+}
+
+/* Header */
+
+.header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 22px;
+
+    background:linear-gradient(135deg,#387ed1,#2b6cbf);
+
+}
+
+.header h3{
+
+    margin:0;
+
+    color:white;
+
+    font-size:22px;
+
+    font-weight:600;
+
+}
+
+.header p{
+
+    color:#dbe9ff;
+
+    margin-top:4px;
+
+    font-size:13px;
+
+}
+
+.close-btn{
+
+    border:none;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.close-btn:hover{
+
+    transform:rotate(90deg);
+
+}
+
+/* Body */
+
+.regular-order{
+
+    padding:25px;
+
+    background:white;
+
+}
+
+.inputs{
+
+    display:flex;
+
+    gap:18px;
+
+}
+
+.inputs fieldset{
+
+    flex:1;
+
+    border:1px solid #d9d9d9;
+
+    border-radius:10px;
+
+    padding:8px 14px;
+
+    transition:.3s;
+
+}
+
+.inputs fieldset:focus-within{
+
+    border-color:#387ed1;
+
+    box-shadow:0 0 0 3px rgba(56,126,209,.15);
+
+}
+
+.inputs legend{
+
+    font-size:13px;
+
+    color:#666;
+
+    padding:0 5px;
+
+}
+
+.inputs input{
+
+    width:100%;
+
+    border:none;
+
+    font-size:18px;
+
+    padding:8px 0;
+
+    background:transparent;
+
+}
+
+.inputs input:focus{
+
+    outline:none;
+
+}
+
+/* Footer */
+
+.buttons{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 22px;
+
+    border-top:1px solid #ececec;
+
+    background:#fafafa;
+
+}
+
+.buttons span{
+
+    font-size:14px;
+
+    color:#666;
+
+}
+
+.buttons strong{
+
+    color:#222;
+
+}
+
+/* Buttons */
+
+.btn{
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:11px 22px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    margin-left:10px;
+
+}
+
+.btn-blue{
+
+    background:#387ed1;
+
+    color:white;
+
+}
+
+.btn-blue:hover{
+
+    background:#2c6ec0;
+
+}
+
+.btn-grey{
+
+    background:#e5e5e5;
+
+    color:#444;
+
+}
+
+.btn-grey:hover{
+
+    background:#d0d0d0;
+
+}
